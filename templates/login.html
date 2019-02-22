@@ -1,0 +1,74 @@
+{% extends "head.html" %}
+{% block content %}
+<el-card style="width: 300px;margin: 60px auto;" shadow="nerve">
+    <el-form ref="form" :model="form">
+        <el-form-item>
+            <div style="text-align: center;font-size: large">登 录</div>
+        </el-form-item>
+        <el-form-item>
+            <el-input v-model="form.user" placeholder="请输入账号" type="text" clearable></el-input>
+        </el-form-item>
+        <el-form-item>
+            <el-input v-model="form.pwd" placeholder="请输入密码" type="password" clearable></el-input>
+        </el-form-item>
+        <el-form-item>
+            <el-row>
+                <el-col :span="12">
+                    <el-button type="text" @click="develop">忘记密码</el-button>
+                </el-col>
+                <el-col :span="12">
+                    <el-button @click="login" type="primary" style="float: right" round>登录
+                    </el-button>
+                </el-col>
+            </el-row>
+        </el-form-item>
+    </el-form>
+</el-card>
+{% endblock %}
+{% block js %}
+<script>
+    var Main = {
+        data() {
+            return {
+                form: {
+                    user: '',
+                    pwd: '',
+                },
+                activeIndex: '4',
+                loading: false,
+            };
+        },
+        methods: {
+            handleSelect(key, keyPath) {
+                console.log(key, keyPath);
+            },
+            login() {
+                console.log(this.pwd)
+                axios({
+                    method: 'get',
+                    url: 'dologin',
+                    data: {
+                        pwd: pwd
+                    }
+                }).then(function (res) {
+                    console.log(res)
+
+                }).catch(function (err) {
+                    but.open()
+                });
+            }, develop() {
+                this.$message({
+                    message: '功能待开发',
+                    type: 'warning'
+                });
+            }, open() {
+                this.$alert('网络异常', '错误', {
+                    confirmButtonText: '确定',
+                });
+            }
+        }
+    }
+    var Ctor = Vue.extend(Main)
+    new Ctor().$mount('#app')
+</script>
+{% endblock %}
